@@ -27,6 +27,7 @@ pub enum Language {
     Markdown,
     Lua,
     Dart,
+    Cpp,
     Unknown,
 }
 
@@ -58,6 +59,7 @@ impl Language {
             "md" | "markdown" => Self::Markdown,
             "lua" => Self::Lua,
             "dart" => Self::Dart,
+            "c" | "cpp" | "h" => Self::Cpp,
             _ => Self::Unknown,
         }
     }
@@ -68,23 +70,33 @@ impl Language {
 
         match self {
             Self::Rust => {
-                parser.set_language(&tree_sitter_rust::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_rust::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Python => {
-                parser.set_language(&tree_sitter_python::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_python::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::JavaScript => {
-                parser.set_language(&tree_sitter_javascript::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_javascript::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::TypeScript => {
-                parser.set_language(&tree_sitter_typescript::LANGUAGE_TSX.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_typescript::LANGUAGE_TSX.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Java => {
-                parser.set_language(&tree_sitter_java::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_java::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Go => {
@@ -92,63 +104,93 @@ impl Language {
                 Some(parser)
             }
             Self::PHP => {
-                parser.set_language(&tree_sitter_php::LANGUAGE_PHP.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_php::LANGUAGE_PHP.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::XML => {
-                parser.set_language(&tree_sitter_xml::LANGUAGE_XML.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_xml::LANGUAGE_XML.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Swift => {
-                parser.set_language(&tree_sitter_swift::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_swift::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::ObjectiveC => {
-                parser.set_language(&tree_sitter_objc::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_objc::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::CSS => {
-                parser.set_language(&tree_sitter_css::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_css::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Scala => {
-                parser.set_language(&tree_sitter_scala::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_scala::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Zig => {
-                parser.set_language(&tree_sitter_zig::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_zig::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::YAML => {
-                parser.set_language(&tree_sitter_yaml::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_yaml::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::JSDoc => {
-                parser.set_language(&tree_sitter_jsdoc::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_jsdoc::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Bash => {
-                parser.set_language(&tree_sitter_bash::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_bash::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::JSON => {
-                parser.set_language(&tree_sitter_json::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_json::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::HTML => {
-                parser.set_language(&tree_sitter_html::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_html::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Regex => {
-                parser.set_language(&tree_sitter_regex::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_regex::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::CSharp => {
-                parser.set_language(&tree_sitter_c_sharp::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_c_sharp::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Ruby => {
-                parser.set_language(&tree_sitter_ruby::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_ruby::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Markdown => {
@@ -156,7 +198,15 @@ impl Language {
                 Some(parser)
             }
             Self::Lua => {
-                parser.set_language(&tree_sitter_lua::LANGUAGE.into()).ok()?;
+                parser
+                    .set_language(&tree_sitter_lua::LANGUAGE.into())
+                    .ok()?;
+                Some(parser)
+            }
+            Self::Cpp => {
+                parser
+                    .set_language(&tree_sitter_cpp::LANGUAGE.into())
+                    .ok()?;
                 Some(parser)
             }
             Self::Dart => {
@@ -223,10 +273,11 @@ impl Language {
             Self::Markdown => "Markdown",
             Self::Lua => "Lua",
             Self::Dart => "Dart",
+            Self::Cpp => "C++",
             Self::Unknown => "Unknown",
         }
     }
-    
+
     /// Get the primary file extension for this language
     pub fn get_extension(&self) -> &'static str {
         match self {
@@ -254,10 +305,11 @@ impl Language {
             Self::Markdown => "md",
             Self::Lua => "lua",
             Self::Dart => "dart",
+            Self::Cpp => "cpp",
             Self::Unknown => "txt",
         }
     }
-    
+
     /// Get all file extensions associated with this language
     pub fn get_all_extensions(&self) -> Vec<&'static str> {
         match self {
@@ -285,6 +337,7 @@ impl Language {
             Self::Markdown => vec!["md", "markdown"],
             Self::Lua => vec!["lua"],
             Self::Dart => vec!["dart"],
+            Self::Cpp => vec!["cpp", "h", "c"],
             Self::Unknown => vec!["txt"],
         }
     }
